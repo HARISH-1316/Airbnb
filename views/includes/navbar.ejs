@@ -17,8 +17,14 @@
 
       <!-- SEARCH -->
       <div class="search-nav mx-auto">
-        <form class="d-flex search-form" action="/listings/search">
-          <input name="search" class="form-control me-2" type="search" placeholder="Search">
+        <form class="d-flex search-form" action="/listings" method="GET">
+
+          <input type="hidden" name="category" value="<%= category %>">
+
+          <input type="hidden" name="sort" value="<%= sort %>">
+
+          <input name="search" class="form-control me-2" type="search" placeholder="Search" value="<%= search || '' %>">
+
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
       </div>

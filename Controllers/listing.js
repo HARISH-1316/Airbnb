@@ -1,10 +1,44 @@
 const Listing = require("../Models/Listing");
 
 module.exports.index = async (req, res) => {
-  let { category } = req.query;
-  let query = category ? { category } : {};
-  const listings = await Listing.find(query);
-  res.render("./listings/index.ejs", { listings });
+  let { category = "", sort = "", search = "" } = req.query;
+  category = category.trim();
+  search = search.trim();
+  sort = sort.trim();
+  let query = {};
+  let sortQuery;
+  let listings;
+
+  if (search) {
+    query.$or = [
+      { title: { $regex: search, $options: "i" } },
+      { location: { $regex: search, $options: "i" } },
+      { country: { $regex: search, $options: "i" } },
+    ];
+  }
+
+  if (category) {
+    query.category = category;
+  }
+
+  if (sort) {
+    req.flash("sort", sort);
+    switch (sort) {
+      case "latest":
+        sortQuery = { createdAt: -1 };
+        break;
+      case "priceLow":
+        sortQuery = { price: 1 };
+        break;
+      case "priceHigh":
+        sortQuery = { price: -1 };
+        break;
+      default:
+        break;
+    }
+  }
+  listings = await Listing.find(query).sort(sortQuery);
+  res.render("./listings/index.ejs", { listings, sort, category, search });
 };
 
 module.exports.renderNewListingForm = (req, res) => {

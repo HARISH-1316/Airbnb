@@ -90,10 +90,17 @@ const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/User.js");
 
+app.get("/", (req, res) => {
+  res.redirect("/listings");
+});
+
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   res.locals.currUser = req.user;
+  res.locals.search = req.query.search;
+  res.locals.category = req.query.category;
+  res.locals.sort = req.query.sort;
   next();
 });
 
@@ -101,22 +108,12 @@ app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("", userRouter);
 
-// app.get("/fakeUser", async (req, res) => {
-//   const fakeUser = new User({
-//     email: "student@gmail.com",
-//     username: "hp1316",
-//   });
-
-//   let newUser = await User.register(fakeUser, "helloworld");
-//   res.send(newUser);
-// });
-
 app.listen(3000, () => {
   console.log(`Listening to port :${3000}`);
 });
 
 app.get("/", (req, res) => {
-  res.send("HI Iam Root");
+  res.redirect("/listings");
 });
 
 app.use(() => {
