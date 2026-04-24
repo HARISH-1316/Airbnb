@@ -1,0 +1,12 @@
+.card {
+  max-width: 700px; /* 🔥 adjust: 500–700px ideal */
+  margin: 0 auto; /* center it */
+}
+
+.btn-danger {
+  background-color: #ff3434 !important;
+  border: none;
+}
+.btn-danger:hover {
+  background-color: #e83737 !important;
+}
