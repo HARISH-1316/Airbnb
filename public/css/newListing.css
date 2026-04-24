@@ -10,3 +10,7 @@
 .btn-danger:hover {
   background-color: #e83737 !important;
 }
+
+.container {
+  min-height: 490px;
+}

@@ -2,7 +2,9 @@
   height: auto;
   border: 2px solid gray;
   border-radius: 7px;
-  margin-top: 2rem;
+
+  margin-top: auto; /* 🔥 THIS IS THE FIX */
+
   padding: 1rem;
   background-color: #e1e1e1;
 }
