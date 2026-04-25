@@ -1,20 +1,21 @@
 html,
 body {
   height: 100%;
-  margin: 0;
 }
 
-body {
+.page-wrapper {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
-
 /* Main container */
 .container {
-  flex: 1;
   max-width: 1200px;
   margin: 30px auto;
   padding: 20px;
+}
+.main-content {
+  flex: 1;
 }
 
 /* Optional: smooth page look */

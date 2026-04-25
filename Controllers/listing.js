@@ -1,6 +1,12 @@
 const Listing = require("../Models/Listing");
+const User = require("../Models/User");
 
 module.exports.index = async (req, res) => {
+  let user;
+  if (req.user) {
+    user = await User.findById(req.user._id);
+  }
+
   let { category = "", sort = "", search = "" } = req.query;
   category = category.trim();
   search = search.trim();
@@ -38,7 +44,21 @@ module.exports.index = async (req, res) => {
     }
   }
   listings = await Listing.find(query).sort(sortQuery);
-  res.render("./listings/index.ejs", { listings, sort, category, search });
+
+  const wishlists = new Set();
+  if (user) {
+    for (wishlist of user.wishlists) {
+      wishlists.add(wishlist.toString());
+    }
+  }
+
+  res.render("./listings/index.ejs", {
+    listings,
+    sort,
+    category,
+    search,
+    wishlists,
+  });
 };
 
 module.exports.renderNewListingForm = (req, res) => {
@@ -59,22 +79,57 @@ module.exports.showListing = async (req, res) => {
     })
     .populate("owner");
 
+  let user;
+  if (req.user) {
+    user = await User.findOne({ _id: req.user._id, wishlists: id });
+  }
+  let wished = false;
+  if (user) {
+    wished = true;
+  }
+
   if (!listing) {
     req.flash("error", "Listing you are searching for does not exists.");
     return res.redirect("/listings");
   }
   // console.log(listing);
-  res.render("./listings/listing.ejs", { listing });
+  res.render("./listings/listing.ejs", { listing, wished });
 };
 
-module.exports.searchListing = async (req, res) => {
-  let { search } = req.query;
-  let query = {
-    $or: [{ location: search }, { country: search }, { title: search }],
-  };
-  const listings = await Listing.find(query);
+module.exports.myListings = async (req, res) => {
+  const listings = await Listing.find({ owner: req.user._id });
+  res.render("./listings/myListings.ejs", { listings });
+};
 
-  res.render("./listings/index.ejs", { listings });
+module.exports.GetMyWishlists = async (req, res) => {
+  console.log("abcd");
+  let wishlistsIds = await User.findById(req.user._id).select("wishlists");
+  console.log(wishlistsIds);
+  const listings = await Listing.find({ _id: { $in: wishlistsIds.wishlists } });
+  console.log(listings);
+  res.render("./listings/myWishlists.ejs", { listings });
+};
+
+module.exports.myWishlist = async (req, res) => {
+  let { id } = req.params;
+
+  if (!req.user) {
+    req.flash("error", "You are not authenticated!");
+    return res.redirect("/login");
+  }
+
+  let exists = await User.findOne({ _id: req.user._id, wishlists: id });
+
+  if (!exists) {
+    await User.findByIdAndUpdate(res.locals.currUser.id, {
+      $push: { wishlists: id },
+    });
+  } else {
+    await User.findByIdAndUpdate(res.locals.currUser.id, {
+      $pull: { wishlists: id },
+    });
+  }
+  res.redirect(req.get("Referer") || "/listings");
 };
 
 module.exports.postNewListing = async (req, res) => {
@@ -88,7 +143,6 @@ module.exports.postNewListing = async (req, res) => {
   }
 
   listing.owner = req.user;
-
   await Listing.create(listing);
 
   req.flash("success", "New Listing Created");

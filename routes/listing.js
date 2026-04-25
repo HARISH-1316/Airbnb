@@ -30,8 +30,21 @@ router
     wrapAsync(listingController.postNewListing),
   );
 
+// My Listings
+router.get("/myListings", wrapAsync(listingController.myListings));
+
+// GET Wishlists
+router.get("/myWishlists", wrapAsync(listingController.GetMyWishlists));
+
+// POST Wishlists
+router.post("/:id/wishlist", wrapAsync(listingController.myWishlist));
+
 //New Listing Get
-router.get("/new", isLoggedIn, listingController.renderNewListingForm);
+router.get(
+  "/new",
+  isLoggedIn,
+  wrapAsync(listingController.renderNewListingForm),
+);
 
 router
   .route("/:id")

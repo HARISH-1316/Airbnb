@@ -34,7 +34,7 @@ module.exports.postLogin = async (req, res) => {
   const redirectUrl = res.locals.redirectUrl
     ? res.locals.redirectUrl
     : "/listings";
-  console.log("ABCD");
+
   res.redirect(redirectUrl);
 };
 

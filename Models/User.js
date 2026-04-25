@@ -6,6 +6,12 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  wishlists: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Listing",
+    },
+  ],
 });
 
 userSchema.plugin(passportLocalMongoose);

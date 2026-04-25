@@ -266,28 +266,41 @@ a:hover {
   transition: all 0.3s ease;
 }
 
-.image-container {
-  position: relative; /* important */
+/* Actions container */
+.actions {
+  display: flex;
+  gap: 12px;
+  padding: 10px 12px 14px;
 }
 
-.wishlist-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-
-  background: rgba(255, 255, 255, 0.8);
+/* Common button style */
+.actions button {
+  flex: 1;
+  padding: 8px 25px;
+  border-radius: 8px;
   border: none;
-  border-radius: 50%;
-
-  padding: 6px 8px;
-  font-size: 18px;
+  font-size: 13px;
+  font-weight: 500;
   cursor: pointer;
-
   transition: all 0.2s ease;
 }
 
-/* Hover effect */
-.wishlist-btn:hover {
-  transform: scale(1.1);
-  background: white;
+/* Edit button (subtle) */
+.actions a button {
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+.actions a button:hover {
+  background-color: #e6e6e6;
+}
+
+/* Delete button (highlight) */
+.actions form button {
+  background-color: #ff385c;
+  color: white;
+}
+
+.actions form button:hover {
+  background-color: #e03150;
 }
