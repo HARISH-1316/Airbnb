@@ -20,9 +20,14 @@ const prices = document.querySelectorAll(".price");
 toggle.addEventListener("change", () => {
   prices.forEach((p) => {
     let basePrice = Number(p.getAttribute("data-price"));
-    let finalPrice = toggle.checked ? basePrice * 1.18 : basePrice;
+    let finalPrice = Math.round(basePrice * 1.18);
 
-    p.querySelector(".price-value").innerText =
-      "Price: ₹" + Math.round(finalPrice).toLocaleString("en-IN");
+    if (toggle.checked) {
+      p.querySelector(".price-value").innerHTML =
+        `Price: ₹${finalPrice.toLocaleString("en-IN")} <small style="color:green">(+18% GST)</small>`;
+    } else {
+      p.querySelector(".price-value").innerText =
+        `Price: ₹${basePrice.toLocaleString("en-IN")}`;
+    }
   });
 });
