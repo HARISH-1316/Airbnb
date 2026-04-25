@@ -2,26 +2,25 @@ html,
 body {
   height: 100%;
 }
-/* Main container */
-.container {
-  max-width: 1200px;
-  margin: 30px auto;
-  padding: 20px;
+
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
 }
+
 .main-content {
   flex: 1;
 }
-
 /* Optional: smooth page look */
 .container > * {
-  animation: fadeIn 0.3s ease-in;
+  animation: fadeIn 0.2s ease-in;
 }
 
 /* Animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(4px);
   }
   to {
     opacity: 1;
