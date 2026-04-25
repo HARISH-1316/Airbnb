@@ -113,11 +113,6 @@ module.exports.GetMyWishlists = async (req, res) => {
 module.exports.myWishlist = async (req, res) => {
   let { id } = req.params;
 
-  if (!req.user) {
-    req.flash("error", "You are not authenticated!");
-    return res.redirect("/login");
-  }
-
   const exists = await User.exists({
     _id: req.user._id,
     wishlists: id,

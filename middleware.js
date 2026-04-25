@@ -4,7 +4,9 @@ const Review = require("./Models/Review");
 const isLoggedIn = (req, res, next) => {
   if (!req.isAuthenticated()) {
     console.log(req.originalUrl);
-    req.session.redirectUrl = req.originalUrl;
+    if (req.method === "GET") {
+      req.session.redirectUrl = req.originalUrl;
+    }
     req.flash("error", "You are not authenticated!");
     return res.redirect("/login");
   }

@@ -40,7 +40,11 @@ router.get("/myListings", wrapAsync(listingController.myListings));
 router.get("/myWishlists", wrapAsync(listingController.GetMyWishlists));
 
 // POST Wishlists
-router.post("/:id/wishlist", wrapAsync(listingController.myWishlist));
+router.post(
+  "/:id/wishlist",
+  isLoggedIn,
+  wrapAsync(listingController.myWishlist),
+);
 
 router
   .route("/:id")
