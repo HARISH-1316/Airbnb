@@ -25,10 +25,13 @@ router
   // New Listing
   .post(
     isLoggedIn,
-    upload.single("image"),
     validate(listingSchema),
+    upload.single("image"),
     wrapAsync(listingController.postNewListing),
   );
+
+//New Listing Get
+router.get("/new", isLoggedIn, listingController.renderNewListingForm);
 
 // My Listings
 router.get("/myListings", wrapAsync(listingController.myListings));
@@ -38,13 +41,6 @@ router.get("/myWishlists", wrapAsync(listingController.GetMyWishlists));
 
 // POST Wishlists
 router.post("/:id/wishlist", wrapAsync(listingController.myWishlist));
-
-//New Listing Get
-router.get(
-  "/new",
-  isLoggedIn,
-  wrapAsync(listingController.renderNewListingForm),
-);
 
 router
   .route("/:id")

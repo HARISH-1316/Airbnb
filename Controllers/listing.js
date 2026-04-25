@@ -47,7 +47,7 @@ module.exports.index = async (req, res) => {
 
   const wishlists = new Set();
   if (user) {
-    for (wishlist of user.wishlists) {
+    for (let wishlist of user.wishlists) {
       wishlists.add(wishlist.toString());
     }
   }
@@ -59,10 +59,6 @@ module.exports.index = async (req, res) => {
     search,
     wishlists,
   });
-};
-
-module.exports.renderNewListingForm = (req, res) => {
-  res.render("./listings/newListing.ejs");
 };
 
 module.exports.showListing = async (req, res) => {
@@ -81,8 +77,12 @@ module.exports.showListing = async (req, res) => {
 
   let user;
   if (req.user) {
-    user = await User.findOne({ _id: req.user._id, wishlists: id });
+    user = await User.exists({
+      _id: req.user._id,
+      wishlists: id,
+    });
   }
+
   let wished = false;
   if (user) {
     wished = true;
@@ -118,18 +118,25 @@ module.exports.myWishlist = async (req, res) => {
     return res.redirect("/login");
   }
 
-  let exists = await User.findOne({ _id: req.user._id, wishlists: id });
+  const exists = await User.exists({
+    _id: req.user._id,
+    wishlists: id,
+  });
 
   if (!exists) {
-    await User.findByIdAndUpdate(res.locals.currUser.id, {
-      $push: { wishlists: id },
+    await User.findByIdAndUpdate(req.user._id, {
+      $addToSet: { wishlists: id },
     });
   } else {
-    await User.findByIdAndUpdate(res.locals.currUser.id, {
+    await User.findByIdAndUpdate(req.user._id, {
       $pull: { wishlists: id },
     });
   }
   res.redirect(req.get("Referer") || "/listings");
+};
+
+module.exports.renderNewListingForm = (req, res) => {
+  res.render("./listings/newListing.ejs");
 };
 
 module.exports.postNewListing = async (req, res) => {

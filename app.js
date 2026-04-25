@@ -90,10 +90,6 @@ const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/User.js");
 
-app.get("/", (req, res) => {
-  res.redirect("/listings");
-});
-
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
@@ -123,5 +119,5 @@ app.use(() => {
 // Error Handler
 
 app.use((err, req, res, next) => {
-  res.render("error.ejs", { err });
+  return res.render("error.ejs", { err });
 });
