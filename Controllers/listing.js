@@ -92,7 +92,7 @@ module.exports.showListing = async (req, res) => {
     req.flash("error", "Listing you are searching for does not exists.");
     return res.redirect("/listings");
   }
-  // console.log(listing);
+
   res.render("./listings/listing.ejs", { listing, wished });
 };
 
@@ -102,11 +102,10 @@ module.exports.myListings = async (req, res) => {
 };
 
 module.exports.GetMyWishlists = async (req, res) => {
-  console.log("abcd");
   let wishlistsIds = await User.findById(req.user._id).select("wishlists");
-  console.log(wishlistsIds);
+
   const listings = await Listing.find({ _id: { $in: wishlistsIds.wishlists } });
-  console.log(listings);
+
   res.render("./listings/myWishlists.ejs", { listings });
 };
 

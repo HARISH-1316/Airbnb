@@ -23,7 +23,6 @@ async function geocodeLocation(place) {
 async function showLocation(place) {
   const coords = await geocodeLocation(place);
 
-  console.log(coords);
   if (!coords) return;
 
   // Move map

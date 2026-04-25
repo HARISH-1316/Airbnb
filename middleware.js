@@ -3,7 +3,6 @@ const Review = require("./Models/Review");
 
 const isLoggedIn = (req, res, next) => {
   if (!req.isAuthenticated()) {
-    console.log(req.originalUrl);
     if (req.method === "GET") {
       req.session.redirectUrl = req.originalUrl;
     }
@@ -16,7 +15,6 @@ const isLoggedIn = (req, res, next) => {
 const saveRedirectUrl = (req, res, next) => {
   if (req.session.redirectUrl) {
     res.locals.redirectUrl = req.session.redirectUrl;
-    console.log(res.locals.redirectUrl);
   }
   next();
 };
