@@ -6,10 +6,13 @@ const express = require("express");
 const app = express();
 const path = require("path");
 
+const helmet = require("helmet");
+app.use(helmet());
+
 const mongoose = require("mongoose");
 const DB_URL = process.env.ATLASDB_URL;
 
-const User = require("./Models/User.js");
+const User = require("../Models/User.js");
 
 const methodOverride = require("method-override");
 
@@ -17,19 +20,40 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 app.engine("ejs", ejsMate);
 
-//Path
+// ✅ FIXED: view engine + correct path
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
+app.set("views", path.join(__dirname, "../views"));
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride("_method"));
 
-// Static files
-app.use(express.static(path.join(__dirname, "public")));
+// ✅ FIXED: correct static path (only once)
+app.use(express.static(path.join(__dirname, "../public")));
 
-// Express Session
+// =======================
+// ✅ FIXED MongoDB (Vercel)
+// =======================
+let isConnected = false;
+
+async function connectDB() {
+  if (isConnected) return;
+
+  try {
+    await mongoose.connect(DB_URL);
+    isConnected = true;
+    console.log("MongoDB connected");
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+connectDB();
+
+// =======================
+// Sessions
+// =======================
 const session = require("express-session");
 const MongoStore = require("connect-mongo").default;
 
@@ -55,6 +79,7 @@ const sessionOptions = {
     maxAge: 7 * 24 * 60 * 60 * 1000,
   },
 };
+
 app.use(session(sessionOptions));
 
 // connect-flash
@@ -64,32 +89,23 @@ app.use(flash());
 // Passport
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
+
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
 
+passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-//Express Error
-const ExpressError = require("./utils/ExpressError.js");
+// Express Error
+const ExpressError = require("../utils/ExpressError.js");
 
-main()
-  .then(() => {
-    console.log("Mongoose connected successfully!");
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+// Routes
+const listingRouter = require("../routes/listing.js");
+const reviewRouter = require("../routes/review.js");
+const userRouter = require("../routes/User.js");
 
-async function main() {
-  await mongoose.connect(DB_URL);
-}
-
-const listingRouter = require("./routes/listing.js");
-const reviewRouter = require("./routes/review.js");
-const userRouter = require("./routes/User.js");
-
+// locals middleware
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
@@ -104,20 +120,20 @@ app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("", userRouter);
 
-app.listen(3000, () => {
-  console.log(`Listening to port :${3000}`);
-});
-
+// home route
 app.get("/", (req, res) => {
   res.redirect("/listings");
 });
 
+// 404 handler
 app.use(() => {
   throw new ExpressError(404, "Page not found");
 });
 
-// Error Handler
-
+// error handler
 app.use((err, req, res, next) => {
   return res.render("error.ejs", { err });
 });
+
+// ✅ REQUIRED for Vercel
+module.exports = app;
