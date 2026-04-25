@@ -136,7 +136,8 @@
     <div class="Outer">
         <div class="OuterListing">
             <% if(listings.length==0){ %>
-                <p>No Listing of the given specification</p>
+                <p>Looks like there are no listings matching your filters.<br>
+                    Try adjusting your search or explore all listings.</p>
                 <% } %>
                     <% for(let listing of listings){ %>
                         <a href="/listings/<%= listing._id %>">

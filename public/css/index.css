@@ -10,7 +10,7 @@ body {
 .Outer {
   z-index: 100;
   max-width: 1300px;
-  min-height: 350px;
+  min-height: 60vh;
   margin: 0 auto;
   padding: 30px;
   background-color: #ffffff;
