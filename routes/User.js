@@ -29,11 +29,11 @@ router
 
   // POST Login
   .post(
+    saveRedirectUrl,
     passport.authenticate("local", {
       failureRedirect: "/login",
       failureFlash: true,
     }),
-    saveRedirectUrl,
     wrapAsync(userController.postLogin),
   );
 
