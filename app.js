@@ -30,7 +30,7 @@ app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 
 // =======================
-// ✅ MongoDB (Render-friendly)
+// MongoDB
 // =======================
 mongoose
   .connect(DB_URL)
@@ -61,7 +61,7 @@ const sessionOptions = {
   resave: false,
   saveUninitialized: true,
   cookie: {
-    secure: false, // ✅ IMPORTANT for Render
+    secure: false,
     expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
     maxAge: 7 * 24 * 60 * 60 * 1000,
   },
@@ -124,7 +124,7 @@ app.use((err, req, res, next) => {
 });
 
 // =======================
-// ✅ PORT FIX (MOST IMPORTANT)
+// PORT FIX
 // =======================
 const PORT = process.env.PORT || 3000;
 
