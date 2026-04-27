@@ -28,7 +28,6 @@ module.exports.index = async (req, res) => {
   }
 
   if (sort) {
-    req.flash("sort", sort);
     switch (sort) {
       case "latest":
         sortQuery = { createdAt: -1 };
@@ -90,7 +89,10 @@ module.exports.showListing = async (req, res) => {
 
   if (!listing) {
     req.flash("error", "Listing you are searching for does not exists.");
-    return res.redirect("/listings");
+    return req.session.save((err2) => {
+      if (err2) return next(err2);
+      return res.redirect("/listings");
+    });
   }
 
   res.render("./listings/listing.ejs", { listing, wished });
@@ -147,7 +149,10 @@ module.exports.postNewListing = async (req, res) => {
   await Listing.create(listing);
 
   req.flash("success", "New Listing Created");
-  res.redirect("/listings");
+  return req.session.save((err2) => {
+    if (err2) return next(err2);
+    res.redirect("/listings");
+  });
 };
 
 module.exports.renderEditListingForm = async (req, res) => {
@@ -160,7 +165,10 @@ module.exports.renderEditListingForm = async (req, res) => {
 
   if (!listing) {
     req.flash("error", "Listing you are searching for does not exists.");
-    return res.redirect("/listings");
+    return req.session.save((err2) => {
+      if (err2) return next(err2);
+      return res.redirect("/listings");
+    });
   }
 
   res.render("./listings/editListing.ejs", { listing });
@@ -181,13 +189,18 @@ module.exports.patchEditListing = async (req, res) => {
   await Listing.findByIdAndUpdate(id, listing);
 
   req.flash("success", "Listing Updated");
-
-  res.redirect(`/listings/${id}`);
+  return req.session.save((err2) => {
+    if (err2) return next(err2);
+    res.redirect(`/listings/${id}`);
+  });
 };
 
 module.exports.destroyListing = async (req, res) => {
   let { id } = req.params;
   await Listing.findByIdAndDelete(id);
   req.flash("success", "Listing Deleted");
-  res.redirect("/listings");
+  return req.session.save((err2) => {
+    if (err2) return next(err2);
+    res.redirect("/listings");
+  });
 };

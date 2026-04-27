@@ -6,4 +6,5 @@ module.exports = Joi.object({
   }),
   username: Joi.string().required(),
   password: Joi.string().required(),
+  phone: Joi.string().required().min(10).min(10),
 });

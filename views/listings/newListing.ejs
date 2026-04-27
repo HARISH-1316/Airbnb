@@ -42,7 +42,7 @@
 
         </div>
 
-        <!-- 🔥 Price + Category Row -->
+        <!-- Price + Category Row -->
         <div class="row">
 
           <!-- Price -->
@@ -84,6 +84,12 @@
             <label class="form-label fw-semibold">Country</label>
             <input name="listing[country]" type="text" class="form-control" placeholder="Enter country" required>
           </div>
+        </div>
+
+        <!-- Seller Info (auto from logged-in user) -->
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Contact Number</label>
+          <input type="text" class="form-control" value="<%= currUser.phone %>" readonly>
         </div>
 
         <!-- Submit -->

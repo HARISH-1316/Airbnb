@@ -131,6 +131,37 @@ body {
   transition: 0.2s ease;
 }
 
+/* Whatsapp Button */
+.whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  background-color: #25d366; /* WhatsApp green */
+  color: white;
+
+  padding: 8px 14px;
+  border-radius: 25px;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+/* Icon */
+.whatsapp-btn i {
+  font-size: 16px;
+}
+
+/* Hover */
+.whatsapp-btn:hover {
+  background-color: #1ebe5d;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
 /* Edit button */
 .editDelete form:first-child button {
   background-color: #f2f2f2;

@@ -6,6 +6,13 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  phone: {
+    type: String,
+    required: true,
+    unique: true,
+    min: 10,
+    max: 10,
+  },
   wishlists: [
     {
       type: mongoose.Schema.Types.ObjectId,
