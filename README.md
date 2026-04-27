@@ -1,6 +1,6 @@
 # 🏡 Wanderlust (Airbnb Clone)
 
-This project is a feature-rich Airbnb clone built using the **MERN stack (MongoDB, Express, Node.js)** with a server-rendered frontend using **EJS**. It supports user authentication, listing management, image uploads, reviews, wishlists, and map-based location visualization.
+This project is a comprehensive Airbnb clone built using the **MERN stack (MongoDB, Express, Node.js)** with a server-rendered frontend using **EJS**. It supports user authentication, listing management, image uploads, reviews, wishlists, and map-based location visualization.
 
 🚀 Live: https://airbnb-green-one.vercel.app/
 
