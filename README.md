@@ -60,7 +60,7 @@ This project is a feature-rich Airbnb clone built using the **MERN stack (MongoD
   Display listing locations using Leaflet.js.
 
 - 🔍 Advanced Search, Filtering & Sorting  
-  Enables users to efficiently discover listings through keyword search, category-based filtering (Beach, Mountain, City, etc.), and sorting options like price,     and latest listings.
+  Enables users to efficiently discover listings through keyword search, category-based filtering (Beach, Mountain, City, etc.), and sorting options like price and latest listings.
 
 - ❤️ **Wishlists**  
   Save and manage favorite listings.
@@ -130,12 +130,12 @@ npm install
 ```
 ### 3️⃣ Configure Environment Variables
 ```bash
-CLOUDINARY_CLOUD_NAME = your_cloud_name
-CLOUDINARY_KEY = your_api_key
-CLOUDINARY_SECRET = your_api_secret
-DB_URL = your_mongodb_connection_string
-PORT = 3000
-SESSION_SECRET = your_session_secret
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_KEY=your_api_key
+CLOUDINARY_SECRET=your_api_secret
+DB_URL=your_mongodb_connection_string
+PORT=3000
+SESSION_SECRET=your_session_secret
 ```
 ### 4️⃣ Run the Application
 ```bash
@@ -170,3 +170,14 @@ http://localhost:3000
 
 - 🛡️ **Security Enhancements**  
   Add rate limiting, data sanitization, and stronger access control.
+
+---
+
+## 👨‍💻 Author
+
+**Harish P**  
+Aspiring Full Stack Developer  
+
+🔗 GitHub: https://github.com/HARISH-1316  
+💼 LinkedIn: https://www.linkedin.com/in/harish-prabhakaran-/       
+📧 Email: harishprabhakaran90@gmail.com 
