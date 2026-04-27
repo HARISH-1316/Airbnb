@@ -2,9 +2,26 @@
 
 🚀 Live: https://airbnb-green-one.vercel.app/
 
-
+## 📌 Project Overview
 
 **Wanderlust** is a full-stack web application inspired by Airbnb that allows users to explore, create, and manage property listings with authentication, reviews, and interactive maps.
+
+---
+
+## 📸 Screenshots
+
+## Home Page
+<img width="500" height="275" alt="Screenshot 2026-04-27 182020" src="https://github.com/user-attachments/assets/69e2c250-a952-465e-a719-9504cf830490" />
+
+## Map Integration in Listing
+<img width="500" height="275" alt="Screenshot 2026-04-27 184113" src="https://github.com/user-attachments/assets/faf20cde-3bcf-42a1-8449-6ffadf45a8f1" />
+
+
+## Edit Listing Page
+<img width="500" height="275" alt="Screenshot 2026-04-27 183506" src="https://github.com/user-attachments/assets/7765a00d-c0f9-497f-b5cf-d37471e6811f" />
+
+## Listing Page
+
 
 ---
 
